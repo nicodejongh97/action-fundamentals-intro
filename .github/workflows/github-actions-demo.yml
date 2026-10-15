@@ -24,7 +24,7 @@ on:
         description: 'Environment to deploy to'
         type: environment
         required: true
-
+        
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,6 +45,7 @@ jobs:
           tree
         env:
           REPOSITORY: ${{ github.repository }}
+          
   test:
     runs-on: 
       - ubuntu-26.04
@@ -56,12 +57,16 @@ jobs:
       - name: Run Test
         run: |
           echo "Testing..."
-
+          
   load-test:
     runs-on: ubuntu-26.04
     needs: build
     if: github.event_name == 'workflow_dispatch'
     environment: Load-Test
+    steps:
+      - run: |
+          echo "🧪 Testing..."
+          sleep 15
 
   production:
     runs-on: ubuntu-26.04
