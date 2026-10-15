@@ -2,15 +2,14 @@ name: GitHub Actions Demo
 
 run-name: testing my first workflow
 
-permissions: 
-  contents:
-    - read
+permissions:
+  contents: read
 
 on:
   push:
     branches:
       - main
-    paths-ignore: 
+    paths-ignore:
       - .github/**
   pull_request:
     branches:
@@ -21,16 +20,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
     steps:
       - run: |
-        echo "Event name that triggered the workflow: $EVENT_NAME"
-        echo "Branch: $REF, repository: $REPOSITORY."
+          echo "Event name that triggered the workflow: $EVENT_NAME"
+          echo "Branch: $REF, repository: $REPOSITORY."
         env:
           EVENT_NAME: ${{ github.event_name }}
           REF: ${{ github.ref }}
           REPOSITORY: ${{ github.repository }}
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: List files in the repository
@@ -39,7 +38,3 @@ jobs:
           tree
         env:
           REPOSITORY: ${{ github.repository }}
-      
-  
-
-
